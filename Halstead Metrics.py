@@ -1,4 +1,4 @@
-import pycparser
+from my_pycparser import pycparser
 import sys
 from itertools import accumulate
 import math
@@ -9,7 +9,9 @@ def merge(dict1, dict2):
         dict1[key] = dict1.get(key, 0) + dict2[key]
 
 def parse_halstead(node):
-	
+
+
+
 	if(str(type(node)).split("'")[1] == "tuple"):
 		if(len(node) == 0): return ({}, {})
 		elif (len(node) == 2 and str(type(node[0])).split("'")[1] == "str"):
@@ -27,8 +29,8 @@ def parse_halstead(node):
 
 	if(node is None):
 		return ({}, {})
-	
-	elif(str(type(node)) == "<class 'pycparser.c_ast.FileAST'>"):
+
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.FileAST'>"):
 		operators = {}
 		operands = {}
 		node_list = node.children()
@@ -39,7 +41,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.FuncDef'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.FuncDef'>"):
 		operators = {}
 		operands = {}
 		node_list = node.children()
@@ -49,7 +51,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.FuncDecl'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.FuncDecl'>"):
 		operators = {}
 		operands = {}
 		node_list = node.children()
@@ -59,7 +61,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.ArrayDecl'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.ArrayDecl'>"):
 		operators = {'[]' : 1}
 		operands = {}
 		node_list = node.children()
@@ -69,7 +71,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.PtrDecl'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.PtrDecl'>"):
 		operators = {}
 		operands = {}
 		node_list = node.children()
@@ -79,7 +81,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.ParamList'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.ParamList'>"):
 		operators = {'{}' : 1, '()' : 1}#, ', ;' : len(node.params) - 1}
 		operands = {}
 		node_list = node.children()
@@ -89,7 +91,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.ExprList'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.ExprList'>"):
 		operators = {'()' : 1, ', ;' : len(node.exprs) - 1}
 		operands = {}
 		node_list = node.children()
@@ -99,7 +101,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.EnumeratorList'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.EnumeratorList'>"):
 		operators = {'{}' : 1}#, ', ;' : len(node.enumerators) - 1}
 		operands = {}
 		node_list = node.children()
@@ -109,7 +111,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.DeclList'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.DeclList'>"):
 		operators = {'{}' : 1}#, ', ;' : len(node.decls) - 1}
 		operands = {}
 		node_list = node.children()
@@ -119,7 +121,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.InitList'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.InitList'>"):
 		operators = {'{}' : 1}#, ', ;' : len(node.exprs) - 1}
 		operands = {}
 		node_list = node.children()
@@ -129,7 +131,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Cast'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Cast'>"):
 		operators = {}
 		operands = {'->' : 1}
 		node_list = node.children()
@@ -139,7 +141,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Compound'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Compound'>"):
 		operators = {}
 		operands = {}
 		node_list = node.children()
@@ -149,7 +151,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.CompoundLiteral'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.CompoundLiteral'>"):
 		operators = {}
 		operands = {}
 		node_list = node.children()
@@ -159,7 +161,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.ArrayRef'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.ArrayRef'>"):
 		operators = {'[]' : 1}
 		operands = {}
 		node_list = node.children()
@@ -169,7 +171,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.If'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.If'>"):
 		if(node.iffalse is not None):
 			operators = {'if' : 1, 'else' : 1, '()' : 1, '{}' : 2}
 			operands = {}
@@ -183,7 +185,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.For'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.For'>"):
 		operators = {'for' : 1, '()' : 1, '{}' : 1, ', ;' : 2}
 		operands = {}
 		node_list = node.children()
@@ -193,7 +195,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.While'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.While'>"):
 		operators = {'while' : 1, '()' : 1, '{}' : 1}
 		operands = {}
 		node_list = node.children()
@@ -201,9 +203,9 @@ def parse_halstead(node):
 			oprt, oprn = parse_halstead(child)
 			merge(operators, oprt)
 			merge(operands, oprn)
-		return (operators, operands)		
+		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.DoWhile'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.DoWhile'>"):
 		operators = {'dowhile' : 1, '()' : 1, '{}' : 1, ', ;' : 1}
 		operands = {}
 		node_list = node.children()
@@ -211,9 +213,9 @@ def parse_halstead(node):
 			oprt, oprn = parse_halstead(child)
 			merge(operators, oprt)
 			merge(operands, oprn)
-		return (operators, operands)		
+		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Switch'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Switch'>"):
 		operators = {'switch' : 1, '()' : 1}
 		operands = {}
 		node_list = node.children()
@@ -223,7 +225,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Case'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Case'>"):
 		operators = {'case' : 1, ':' : 1}
 		operands = {}
 		node_list = node.children()
@@ -233,7 +235,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Continue'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Continue'>"):
 		operators = {'continue' : 1, ', ;' : 1}
 		operands = {}
 		node_list = node.children()
@@ -243,7 +245,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Default'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Default'>"):
 		operators = {'default' : 1, ', ;' : 1}
 		operands = {}
 		node_list = node.children()
@@ -253,7 +255,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Return'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Return'>"):
 		operators = {'return' : 1, ', ;' : 1}
 		operands = {}
 		node_list = node.children()
@@ -263,7 +265,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Break'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Break'>"):
 		operators = {'break' : 1, ', ;' : 1}
 		operands = {}
 		node_list = node.children()
@@ -271,9 +273,9 @@ def parse_halstead(node):
 			oprt, oprn = parse_halstead(child)
 			merge(operators, oprt)
 			merge(operands, oprn)
-		return (operators, operands)	
+		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.EllipsisParam'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.EllipsisParam'>"):
 		operators = {'...' : 1}
 		operands = {}
 		node_list = node.children()
@@ -283,7 +285,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.EmptyStatement'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.EmptyStatement'>"):
 		operators = {}
 		operands = {}
 		node_list = node.children()
@@ -293,14 +295,14 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Decl'>"):
-		if(str(type(node.type)) == "<class 'pycparser.c_ast.Enum'>" and 
-			str(type(node.type.values)) == "<class 'pycparser.c_ast.EnumeratorList'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Decl'>"):
+		if(str(type(node.type)) == "<class 'my_pycparser.pycparser.c_ast.Enum'>" and
+			str(type(node.type.values)) == "<class 'my_pycparser.pycparser.c_ast.EnumeratorList'>"):
 			operators = {', ;' : (len(node.type.values.enumerators) - 1)}
-		elif(str(type(node.init)) == "<class 'pycparser.c_ast.InitList'>"):
+		elif(str(type(node.init)) == "<class 'my_pycparser.pycparser.c_ast.InitList'>"):
 			operators = {', ;' : len(node.init.exprs) - 1}
-		elif(str(type(node.type)) == "<class 'pycparser.c_ast.FuncDecl'>" and 
-			str(type(node.type.args)) == "<class 'pycparser.c_ast.ParamList'>"):
+		elif(str(type(node.type)) == "<class 'my_pycparser.pycparser.c_ast.FuncDecl'>" and
+			str(type(node.type.args)) == "<class 'my_pycparser.pycparser.c_ast.ParamList'>"):
 			operators = {', ;' : len(node.type.args.params) - 2}
 		else:
 			operators = {', ;' : 1}
@@ -312,7 +314,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Enum'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Enum'>"):
 		operators = {'enum' : 2}
 		operands = {str(node.name) : 1}
 		node_list = node.children()
@@ -322,7 +324,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Enumerator'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Enumerator'>"):
 		operators = {}
 		operands = {str(node.name) : 1}
 		node_list = node.children()
@@ -332,7 +334,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.FuncCall'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.FuncCall'>"):
 		operators = {', ;' : 1}
 		operands = {}
 		node_list = node.children()
@@ -342,7 +344,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Goto'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Goto'>"):
 		operators = {'goto' : 1, ', ;' : 1}
 		operands = {str(node.name) : 1}
 		node_list = node.children()
@@ -352,7 +354,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.ID'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.ID'>"):
 		operators = {}
 		operands = {str(node.name) : 1}
 		node_list = node.children()
@@ -362,7 +364,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.IdentifierType'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.IdentifierType'>"):
 		operators = {str((node.names)[0]) : 1}
 		operands = {}
 		node_list = node.children()
@@ -372,7 +374,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Label'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Label'>"):
 		operators = {':', 1}
 		operands = {str(node.name) : 1}
 		node_list = node.children()
@@ -382,7 +384,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.NamedInitializer'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.NamedInitializer'>"):
 		operators = {str(node.name) : 1}
 		operands = {str(node.name) : 1}
 		node_list = node.children()
@@ -392,7 +394,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Struct'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Struct'>"):
 		operators = {'struct' : 1, '{}' : 1, ', ;' : 1}
 		operands = {}
 		node_list = node.children()
@@ -402,7 +404,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.StructRef'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.StructRef'>"):
 		operators = {}
 		operands = {str(node.name) : 1}
 		node_list = node.children()
@@ -410,9 +412,9 @@ def parse_halstead(node):
 			oprt, oprn = parse_halstead(child)
 			merge(operators, oprt)
 			merge(operands, oprn)
-		return (operators, operands)	
+		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.TypeDef'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.TypeDef'>"):
 		operators = {str(node.name) : 1}
 		operands = {}
 		node_list = node.children()
@@ -422,7 +424,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.TypeDecl'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.TypeDecl'>"):
 		if(node.declname == 'main'):
 			operators = {str(node.declname) : 1}
 			operands = {}
@@ -436,7 +438,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.TypeName'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.TypeName'>"):
 		operators = {}
 		operands = {str(node.declname) : 1}
 		node_list = node.children()
@@ -446,7 +448,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Union'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Union'>"):
 		operators = {'union' : 1, '{}' : 1, ', ;' : 1}
 		operands = {str(node.name) : 1}
 		node_list = node.children()
@@ -456,7 +458,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.UnaryOp'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.UnaryOp'>"):
 		operators = {str(node.op) : 1}
 		operands = {}
 		node_list = node.children()
@@ -466,7 +468,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.BinaryOp'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.BinaryOp'>"):
 		operators = {str(node.op) : 1}
 		operands = {}
 		node_list = node.children()
@@ -476,7 +478,7 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.TernaryOp'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.TernaryOp'>"):
 		if(node.iffalse is not None):
 			operators = {':' : 1, '?' : 1}
 			operands = {}
@@ -488,9 +490,9 @@ def parse_halstead(node):
 			oprt, oprn = parse_halstead(child)
 			merge(operators, oprt)
 			merge(operands, oprn)
-		return (operators, operands)		
+		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Assignment'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Assignment'>"):
 		operators = {str(node.op) : 1, ', ;' : 1}
 		operands = {}
 		node_list = node.children()
@@ -500,11 +502,11 @@ def parse_halstead(node):
 			merge(operands, oprn)
 		return (operators, operands)
 
-	elif(str(type(node)) == "<class 'pycparser.c_ast.Constant'>"):
+	elif(str(type(node)) == "<class 'my_pycparser.pycparser.c_ast.Constant'>"):
 		return ({}, {node.value : 1})
 
 class HalsteadMetrics():
-	 
+
 	def __init__(self, operators, operands):
 		self.operators = operators
 		self.operands = operands
@@ -584,9 +586,3 @@ if __name__ == "__main__":
 	print("******Halstead Metrics******")
 	hal_metric = HalsteadMetrics(listOfOperators, listOfOperands)
 	hal_metric.showMetrics()
-
-
-
-
-
-
